@@ -16,6 +16,8 @@ provider:
   region: ap-southeast-1
   iamRoleStatements:
     - ${file(iam/ActionsTableIAM.yml):ActionsTableIAM}
+  environment:
+    AUCTION_TABLE_NAME: ${self:custom.AuctionTable.name}
       
 functions:
   createAuction:
@@ -28,6 +30,9 @@ functions:
 custom:
   bundle:
     linting: false
+  AuctionTable:
+    name: !Ref AuctionTable
+    arn: !GetAtt AuctionTable.Arn
 
 resources:
   Resources:

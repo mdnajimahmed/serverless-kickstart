@@ -15,7 +15,7 @@ module.exports.handler = async (event) => {
     createdAt : now.toISOString()
   }
   const saveResult = await dynamodb.put({
-    TableName: 'AuctionTable',
+    TableName: process.env.AUCTION_TABLE_NAME,
     Item: auction
   }).promise()
 

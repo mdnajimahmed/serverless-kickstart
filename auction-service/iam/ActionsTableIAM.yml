@@ -7,4 +7,5 @@ ActionsTableIAM:
     - dynamodb:PutItem
   Resource: 
     # - arn:aws:dynamodb:ap-southeast-1:135129372575:table/AuctionTable
-    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AuctionTable
+    # - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AuctionTable-${self:provider.stage}
+    - ${self:custom.AuctionTable.arn}
