@@ -9,12 +9,14 @@ const createError = require('http-errors')
 const handler = async (event) => {
   const body = event.body
   console.log(body)
-  const now = new Date()
+  const createdAt = new Date()
+  const endedAt = new Date(Date.now() + 1 * (60 * 60 * 1000) );
   const auction = {
     id: uuid(),
     title: body.title,
     status: "OPEN",
-    createdAt: now.toISOString(),
+    createdAt: createdAt.toISOString(),
+    endedAt: endedAt.toISOString(),
     highestBid: {
       amount: 0
     }
