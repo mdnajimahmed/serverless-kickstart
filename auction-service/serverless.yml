@@ -32,6 +32,12 @@ functions:
       - http:
           method: GET
           path: /auction
+  getAuctionById:
+    handler: src/handlers/getAuctionById.handler
+    events:
+      - http:
+          method: GET
+          path: /auction/{id}
 
 custom:
   bundle:

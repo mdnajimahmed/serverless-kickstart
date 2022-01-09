@@ -3,14 +3,7 @@
 const uuid = require('uuid').v4
 const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient()
-const middy = require('@middy/core')
-const httpJsonBodyParser = require('@middy/http-json-body-parser')
-const httpEventNormalizer = require('@middy/http-event-normalizer')
-const httpErrorHandler = require('@middy/http-error-handler')
-const createError = require('http-errors')
-
-
-
+const commonMiddleware = require('../lib/commonMiddleware').handler
 
 const handler = async (event) => {
   const body = event.body
@@ -42,10 +35,7 @@ const handler = async (event) => {
 
 
 // (()=> {
-//   console.log("uuid",uuid)
+//   console.log("uuid",commonMiddleware)
 // })()
 
-module.exports.handler = middy(handler)
-.use(httpJsonBodyParser())
-.use(httpEventNormalizer())
-.use(httpErrorHandler())
+module.exports.handler = commonMiddleware(handler)
