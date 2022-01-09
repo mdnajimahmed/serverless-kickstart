@@ -1,6 +1,6 @@
 'use strict';
 
-const uuid = require('uuid').v4
+
 const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient()
 const middy = require('@middy/core')
@@ -13,31 +13,22 @@ const createError = require('http-errors')
 
 
 const handler = async (event) => {
-  const body = event.body
-  console.log(body)
-  const now = new Date()
-  const auction = {
-    id : uuid(),
-    title : body.title,
-    status: "OPEN",
-    createdAt : now.toISOString()
-  }
+  let auctions = []
   try{
-    await dynamodb.put({
+    const result = await dynamodb.scan({
       TableName: process.env.AUCTION_TABLE_NAME,
-      Item: auction
-    }).promise()
+
+    }).promise();
+    auctions = result.Items
+    console.log("auctions",auctions)
   }catch(e){
     console.error(e)
     throw new createError.InternalServerError(e)
   }
   return {
-    statusCode: 201,
-    body: JSON.stringify(auction)
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+    statusCode : 200,
+    body: JSON.stringify(auctions)
+  }
 };
 
 
