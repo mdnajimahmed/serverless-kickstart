@@ -4,6 +4,7 @@
 const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient()
 const commonMiddleware = require('../lib/commonMiddleware').handler
+const createError = require('http-errors')
 
 const handler = async (event) => {
   let auction = null
