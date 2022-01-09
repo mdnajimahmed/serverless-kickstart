@@ -5,6 +5,7 @@ ActionsTableIAM:
     - dynamodb:Scan
     - dynamodb:GetItem
     - dynamodb:PutItem
+    - dynamodb:UpdateItem
   Resource: 
     # - arn:aws:dynamodb:ap-southeast-1:135129372575:table/AuctionTable
     # - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AuctionTable-${self:provider.stage}

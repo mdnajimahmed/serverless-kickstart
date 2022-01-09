@@ -10,17 +10,20 @@ const handler = async (event) => {
   console.log(body)
   const now = new Date()
   const auction = {
-    id : uuid(),
-    title : body.title,
+    id: uuid(),
+    title: body.title,
     status: "OPEN",
-    createdAt : now.toISOString()
+    createdAt: now.toISOString(),
+    highestBid: {
+      amount: 0
+    }
   }
-  try{
+  try {
     await dynamodb.put({
       TableName: process.env.AUCTION_TABLE_NAME,
       Item: auction
     }).promise()
-  }catch(e){
+  } catch (e) {
     console.error(e)
     throw new createError.InternalServerError(e)
   }
