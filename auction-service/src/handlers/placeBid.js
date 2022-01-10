@@ -5,6 +5,10 @@ const dynamodb = new AWS.DynamoDB.DocumentClient()
 const commonMiddleware = require('../lib/commonMiddleware').handler
 const createError = require('http-errors')
 
+const validator = require('@middy/validator')
+const placeBidSchema = require('../lib/schema/placeBidSchema').schema
+
+
 // classic locking problem
 // use redis to lock the item
 // use sqs fifo queue to update auctions asynchrnously, use itemid as grp in fifo queue.
@@ -54,4 +58,8 @@ const handler = async (event) => {
 //   console.log("uuid", commonMiddleware)
 // })()
 
-module.exports.handler = commonMiddleware(handler)
+module.exports.handler = commonMiddleware(handler).use(
+  validator({
+    inputSchema:placeBidSchema
+  })
+)
