@@ -20,11 +20,13 @@ const handler = async (event) => {
       ':highestBid': {
         amount
       },
-      ':amount':amount
+      ':amount':amount,
+      ':openStatus':'OPEN'
     },
-    ConditionExpression: "attribute_not_exists(#highestBid) or #highestBid.amount < :amount",
+    ConditionExpression: "attribute_not_exists(#highestBid) or (#highestBid.amount < :amount and #status = :openStatus)",
     ExpressionAttributeNames: {
-      "#highestBid": "highestBid"
+      "#highestBid": "highestBid",
+      "#status": "status"
     },
     ReturnValues: 'ALL_NEW'
   }

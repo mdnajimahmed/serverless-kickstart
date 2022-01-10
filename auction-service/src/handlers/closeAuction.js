@@ -20,7 +20,6 @@ const handler = async (event) => {
         console.error(e)
         throw new createError.InternalServerError(e)
     }
-    
 };
   
   
