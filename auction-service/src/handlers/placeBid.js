@@ -16,13 +16,15 @@ const placeBidSchema = require('../lib/schema/placeBidSchema').schema
 const handler = async (event) => {
   const { id } = event.pathParameters
   const { amount } = event.body
+  const {email} = event.requestContext.authorizer
   const params = {
     TableName: process.env.AUCTION_TABLE_NAME,
     Key: { id },
     UpdateExpression: "set highestBid = :highestBid",
     ExpressionAttributeValues: {
       ':highestBid': {
-        amount
+        amount,
+        bidder:email
       },
       ':amount':amount,
       ':openStatus':'OPEN'

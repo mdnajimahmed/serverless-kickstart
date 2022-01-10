@@ -11,6 +11,7 @@ const createAuctionSchema = require('../lib/schema/createAuctionSchema').schema
 
 const handler = async (event) => {
   const body = event.body
+  const {email} = event.requestContext.authorizer
   console.log(body)
   const createdAt = new Date()
   const endedAt = new Date(Date.now() + 1 * (60 * 60 * 1000) );
@@ -22,7 +23,8 @@ const handler = async (event) => {
     endedAt: endedAt.toISOString(),
     highestBid: {
       amount: 0
-    }
+    },
+    seller: email
   }
   try {
     await dynamodb.put({
